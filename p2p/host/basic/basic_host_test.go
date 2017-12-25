@@ -54,7 +54,7 @@ func TestHostSimple(t *testing.T) {
 		t.Fatal(err)
 	}
 	if !bytes.Equal(buf1, buf2) {
-		t.Fatal("buf1 != buf2 -- %x != %x", buf1, buf2)
+		t.Fatalf("buf1 != buf2 -- %x != %x", buf1, buf2)
 	}
 
 	// get it from the pipe (tee)
@@ -63,7 +63,7 @@ func TestHostSimple(t *testing.T) {
 		t.Fatal(err)
 	}
 	if !bytes.Equal(buf1, buf3) {
-		t.Fatal("buf1 != buf3 -- %x != %x", buf1, buf3)
+		t.Fatalf("buf1 != buf3 -- %x != %x", buf1, buf3)
 	}
 }
 
@@ -180,7 +180,7 @@ func TestHostProtoMismatch(t *testing.T) {
 
 	h1.SetStreamHandler("/super", func(s inet.Stream) {
 		t.Error("shouldnt get here")
-		s.Close()
+		s.Reset()
 	})
 
 	_, err := h2.NewStream(ctx, h1.ID(), "/foo", "/bar", "/baz/1.0.0")
